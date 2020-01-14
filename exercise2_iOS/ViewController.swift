@@ -13,8 +13,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     
     var locationManager = CLLocationManager()
-    var desireCoordinate: CLLocationCoordinate2D!
-    var locatepins: [CLLocationCoordinate2D] = []
+    var requiredCoordinate: CLLocationCoordinate2D!
+    var pinLocation: [CLLocationCoordinate2D] = []
     var pin : Int = 0
     var distance = [Double]()
     var screen = [CGPoint]()
@@ -49,30 +49,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
         adddoubleTap()
         }
-
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation : CLLocation = locations[0]
-        let latitude = userLocation.coordinate.latitude
-        let longitude = userLocation.coordinate.longitude
-        let latDelta : CLLocationDegrees = 0.05
-        let lonDelta : CLLocationDegrees = 0.05
-        let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
-        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        let region = MKCoordinateRegion(center: location, span: span)
-        mapView.setRegion(region, animated: true)
-            }
-        
-
+    
     @IBAction func btnRoute(_ sender: Any) {
-        cal(sourcePlaceMark: MKPlacemark(coordinate: locatepins[0]), destinationPlacMark: MKPlacemark(coordinate: locatepins[1]))
+        cal(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[0]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[1]))
         
         
         
-        cal(sourcePlaceMark: MKPlacemark(coordinate: locatepins[1]), destinationPlacMark: MKPlacemark(coordinate: locatepins[2]))
+        cal(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[1]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[2]))
         
         
         
-        cal(sourcePlaceMark: MKPlacemark(coordinate: locatepins[2]), destinationPlacMark: MKPlacemark(coordinate: locatepins[0]))
+        cal(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[2]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[0]))
         
     }
     
@@ -96,18 +83,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                     print(distance)
                     if self.distance.count == 3{
                         print(self.distance[0])
-                        let label1: UILabel = UILabel(frame: CGRect(x: ((self.screen[0].x + self.screen[1].x - 80)/2), y: ((self.screen[0].y + self.screen[1].y)/2), width: 120, height: 30))
-                        label1.text = "\(self.distance[0]) m"
-                        self.mapView.addSubview(label1)
-                        let label2: UILabel = UILabel(frame: CGRect(x: ((self.screen[1].x + self.screen[2].x - 80)/2), y: ((self.screen[1].y + self.screen[2].y)/2), width: 120, height: 30))
-
-                        label2.text = "\(self.distance[1]) m"
-                            self.mapView.addSubview(label2)
-                            let label3: UILabel = UILabel(frame: CGRect(x: ((self.screen[2].x + self.screen[0].x - 80)/2), y: ((self.screen[2].y + self.screen[0].y)/2), width: 120, height: 30))
-
-                        label3.text = "\(self.distance[2]) m"
-
-                        self.mapView.addSubview(label3)
+                        let d1: UILabel = UILabel(frame: CGRect(x: ((self.screen[0].x + self.screen[1].x - 80)/2), y: ((self.screen[0].y + self.screen[1].y)/2), width: 120, height: 30))
+                        d1.text = "\(self.distance[0]) m"
+                        self.mapView.addSubview(d1)
+                        
+                        let d2: UILabel = UILabel(frame: CGRect(x: ((self.screen[1].x + self.screen[2].x - 80)/2), y: ((self.screen[1].y + self.screen[2].y)/2), width: 120, height: 30))
+                        d2.text = "\(self.distance[1]) m"
+                            self.mapView.addSubview(d2)
+                            
+                        let d3: UILabel = UILabel(frame: CGRect(x: ((self.screen[2].x + self.screen[0].x - 80)/2), y: ((self.screen[2].y + self.screen[0].y)/2), width: 120, height: 30))
+                        d3.text = "\(self.distance[2]) m"
+                        self.mapView.addSubview(d3)
                     }
                     self.mapView.addOverlay(route.polyline, level: .aboveRoads)
                     self.mapView.addOverlay(route.polyline, level: .aboveRoads)
@@ -152,35 +138,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 let coordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
                 let annotation = Pin(coordinate: coordinate, identifier: "pin")
                 mapView.addAnnotation(annotation)
-                locatepins.append(coordinate)
+                pinLocation.append(coordinate)
                 
                 if(pin == 3){
-                  let routeLine1 = MKPolyline(coordinates: [locatepins[0],locatepins[1]], count: 2)
-                    let routeLine2 = MKPolyline(coordinates: [locatepins[1],locatepins[2]], count: 2)
-                    let routeLine3 = MKPolyline(coordinates: [locatepins[2],locatepins[0]], count: 2)
-                    let show = MKPolygon(coordinates: locatepins, count: 3)
+                  let routeLine1 = MKPolyline(coordinates: [pinLocation[0],pinLocation[1]], count: 2)
+                    let routeLine2 = MKPolyline(coordinates: [pinLocation[1],pinLocation[2]], count: 2)
+                    let routeLine3 = MKPolyline(coordinates: [pinLocation[2],pinLocation[0]], count: 2)
+                    let show = MKPolygon(coordinates: pinLocation, count: 3)
                     self.mapView.addOverlay(routeLine1)
                     self.mapView.addOverlay(routeLine2)
                     self.mapView.addOverlay(routeLine3)
                     self.mapView.addOverlay(show)
                     }
-                else{
+                else if (pin==4){
                     
-                
+                deletePin()
                     
                 }
-              
-             
-                desireCoordinate = coordinate
+                else{
+                    
+                }
+                requiredCoordinate = coordinate
                 
             }
 
-            func removePin() {
-             for annotation in mapView.annotations {
-                mapView.removeAnnotation(annotation)
-                    }
-                
-            }
+            
             
             func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
                 if annotation is MKUserLocation {
@@ -189,6 +171,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "droppablePin")
                 pinAnnotation.animatesDrop = true
                 return pinAnnotation
+                
+            }
+            
+            func deletePin() {
+             for annotation in mapView.annotations {
+                mapView.removeAnnotation(annotation)
+                    }
                 
             }
           }
