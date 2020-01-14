@@ -51,19 +51,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     
     @IBAction func btnRoute(_ sender: Any) {
-        cal(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[0]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[1]))
+        direction(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[0]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[1]))
         
         
         
-        cal(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[1]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[2]))
+        direction(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[1]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[2]))
         
         
         
-        cal(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[2]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[0]))
+        direction(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[2]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[0]))
         
     }
     
-        func cal(sourcePlaceMark: MKPlacemark , destinationPlacMark: MKPlacemark){
+        func direction(sourcePlaceMark: MKPlacemark , destinationPlacMark: MKPlacemark){
                 
                 let directionRequest = MKDirections.Request()
                 directionRequest.source = MKMapItem(placemark: sourcePlaceMark)
@@ -104,7 +104,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
                 if overlay is MKPolyline{
                     let renderer = MKPolylineRenderer(polyline: overlay as! MKPolyline)
-                    renderer.strokeColor = UIColor.orange
+                    renderer.strokeColor = UIColor.black
                     renderer.lineWidth = 3
                     return renderer
                     }
