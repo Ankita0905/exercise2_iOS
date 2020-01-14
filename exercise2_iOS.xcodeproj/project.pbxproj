@@ -26,7 +26,6 @@
 		E083085823C9416C00A0A9C5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E083085A23C9416C00A0A9C5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E084171923CE3C010070E74C /* pin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pin.swift; sourceTree = "<group>"; };
-		E084175223CE505B0070E74C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,7 +42,6 @@
 		E083084023C9416A00A0A9C5 = {
 			isa = PBXGroup;
 			children = (
-				E084175123CE50490070E74C /* Frameworks */,
 				E083084B23C9416A00A0A9C5 /* exercise2_iOS */,
 				E083084A23C9416A00A0A9C5 /* Products */,
 			);
@@ -70,14 +68,6 @@
 				E083085A23C9416C00A0A9C5 /* Info.plist */,
 			);
 			path = exercise2_iOS;
-			sourceTree = "<group>";
-		};
-		E084175123CE50490070E74C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E084175223CE505B0070E74C /* CoreLocation.framework */,
-			);
-			path = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

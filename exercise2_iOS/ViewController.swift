@@ -53,11 +53,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func btnRoute(_ sender: Any) {
         direction(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[0]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[1]))
         
-        
-        
         direction(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[1]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[2]))
-        
-        
         
         direction(sourcePlaceMark: MKPlacemark(coordinate: pinLocation[2]), destinationPlacMark: MKPlacemark(coordinate: pinLocation[0]))
         
