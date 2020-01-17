@@ -157,9 +157,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 requiredCoordinate = coordinate
                 
             }
-
-            
-            
             func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
                 if annotation is MKUserLocation {
                     return nil
